@@ -1,7 +1,7 @@
 import pandas as pd
 import matplotlib.pyplot as plt
 
- # set font and plot size to be larger by default
+# set font and plot size to be larger by default
 plt.rcParams.update({'font.size': 20, 'figure.figsize': (10, 8)})
 
 titleBasics = pd.read_csv('title-basics.tsv', sep='\t', usecols= ['tconst', 'titleType', 'runtimeMinutes']) 
@@ -13,9 +13,8 @@ df = pd.merge(titleBasics, titleRatings, on=['tconst'])
 # sort out to data set to only include movies
 df = df[df['titleType'] == 'movie']
 
-# remove titles with no run time or rating available
-df = df.replace(r'\\N',' ', regex=True) 
-df = df[df['runtimeMinutes'] != ' ']
+# remove titles with no run time available
+df = df[df['runtimeMinutes'] != '\\N']
 
 # convert to numeric
 df[['runtimeMinutes', 'averageRating']] = df[['runtimeMinutes', 'averageRating']].apply(pd.to_numeric)
